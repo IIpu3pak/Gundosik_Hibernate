@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="domain.User" table="users">
+        <id name="id" column="id" type="long">
+            <generator class="native"/>
+        </id>
+        <property name="firstName" column="first_name" type="string"/>
+        <property name="lastName" column="last_name" type="string"/>
+        <property name="age" column="age" type="int"/>
+
+        <!--<many-to-one name="role" class="domain.Role">
+            <column name="role_id" not-null="true"/>
+        </many-to-one>-->
+
+        <set name="roles" table="users_roles" lazy="false" cascade="save-update">
+            <key>
+                <column name="role_id" not-null="true"/>
+            </key>
+            <!--<one-to-many class="domain.User"></one-to-many>-->
+            <many-to-many column="user_id" class="domain.User"></many-to-many>
+        </set>
+
+    </class>
+
+</hibernate-mapping>
+
